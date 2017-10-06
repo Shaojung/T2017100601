@@ -8,18 +8,21 @@ import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import java.util.ArrayList;
+
 public class MainActivity extends AppCompatActivity {
     final int REQUEST_CODE_ADD = 321;
-    String data[] = {"AAA", "BBBB", "CC", "DDDD", "EEEEEEE"};
+    ArrayList<String> datalist = new ArrayList();
+    ArrayAdapter adapter;
     ListView lv;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         lv = (ListView) findViewById(R.id.listView);
-        ArrayAdapter adapter = new ArrayAdapter(MainActivity.this,
+        adapter = new ArrayAdapter(MainActivity.this,
                     android.R.layout.simple_list_item_1,
-                    data);
+                    datalist);
         lv.setAdapter(adapter);
 
     }
@@ -41,7 +44,9 @@ public class MainActivity extends AppCompatActivity {
         {
             if (resultCode == RESULT_OK)
             {
-
+                String str = data.getStringExtra("data");
+                datalist.add(str);
+                adapter.notifyDataSetChanged();
             }
         }
     }
